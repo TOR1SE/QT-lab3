@@ -1,0 +1,51 @@
+-- 医院诊疗信息管理系统数据库结构（SQLite）
+-- 参考实验指导书给出的 Patient / User / History / Doctor / Department 结构，
+-- 字段长度按实际需要调整，主键均使用自增或业务编号。
+
+CREATE TABLE IF NOT EXISTS User (
+    ID       INTEGER PRIMARY KEY AUTOINCREMENT,
+    FULLNAME TEXT NOT NULL,
+    USERNAME TEXT NOT NULL UNIQUE,
+    PASSWORD TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Department (
+    ID   INTEGER PRIMARY KEY AUTOINCREMENT,
+    NAME TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS Doctor (
+    ID            INTEGER PRIMARY KEY AUTOINCREMENT,
+    EMPLOYEENO    TEXT NOT NULL UNIQUE,
+    NAME          TEXT NOT NULL,
+    DEPARTMENT_ID INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS Patient (
+    ID               TEXT PRIMARY KEY,
+    ID_CARD          TEXT NOT NULL UNIQUE,
+    NAME             TEXT NOT NULL,
+    SEX              INTEGER,
+    DOB              TEXT,
+    HEIGHT           REAL,
+    WEIGHT           REAL,
+    MOBILEPHONE      TEXT,
+    AGE              INTEGER,
+    CREATEDTIMESTAMP TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS History (
+    ID        INTEGER PRIMARY KEY AUTOINCREMENT,
+    USER_ID   TEXT,
+    EVENT     TEXT NOT NULL,
+    TIMESTAMP TEXT NOT NULL
+);
+
+-- 初始登录账号
+INSERT INTO User(FULLNAME, USERNAME, PASSWORD) VALUES('系统管理员', 'admin', '123456');
+INSERT INTO User(FULLNAME, USERNAME, PASSWORD) VALUES('张医生', 'doctor', '123456');
+
+-- 初始科室
+INSERT INTO Department(NAME) VALUES('内科');
+INSERT INTO Department(NAME) VALUES('外科');
+INSERT INTO Department(NAME) VALUES('儿科');
